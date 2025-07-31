@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_graph"
+    app:startDestination="@id/LoginStep1Fragment">
+
+    <fragment
+        android:id="@+id/LoginStep1Fragment"
+        android:name="com.example.myentrance.presentation.view.LoginStep1Fragment"
+        tools:layout="@layout/fragment_login_step1" >
+        <action
+            android:id="@+id/action_LoginStep1Fragment_to_LoginStep2Fragment"
+            app:destination="@id/LoginStep2Fragment" />
+        <action
+            android:id="@+id/action_LoginStep1Fragment_to_registerStep1Fragment1"
+            app:destination="@id/RegisterStep1Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/LoginStep2Fragment"
+        android:name="com.example.myentrance.presentation.view.LoginStep2Fragment"
+        tools:layout="@layout/fragment_login_step2" >
+        <action
+            android:id="@+id/action_LoginStep2Fragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RegisterStep1Fragment"
+        android:name="com.example.myentrance.presentation.view.RegisterStep1Fragment"
+        tools:layout="@layout/fragment_register_step1" >
+        <action
+            android:id="@+id/action_RegisterStep1Fragment_to_RegisterStep2Fragment"
+            app:destination="@id/RegisterStep2Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RegisterStep2Fragment"
+        android:name="com.example.myentrance.presentation.view.RegisterStep2Fragment"
+        tools:layout="@layout/fragment_register_step2" >
+        <action
+            android:id="@+id/action_registerStep2Fragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+</navigation>

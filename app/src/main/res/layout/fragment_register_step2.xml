@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registerStep2Layout"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="32dp"
+    tools:context=".presentation.view.RegisterStep2Fragment">
+
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/app_logo"/>
+
+    <TextView
+        android:id="@+id/otpTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Введите код из SMS для подтверждения"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/otpInput"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:hint="Код"
+        android:inputType="number"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:maxLength="6"
+        android:layout_marginTop="36dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirmRegisterOtpButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Готово"
+        android:layout_marginTop="24dp"/>
+</LinearLayout>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "683672711962",
+    "project_id": "myentrance-23a56",
+    "storage_bucket": "myentrance-23a56.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683672711962:android:be17b108d406d935af32a3",
+        "android_client_info": {
+          "package_name": "com.example.myentrance"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn0udQVL-QfodEY8bDZrboq7nf_jMWkAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
