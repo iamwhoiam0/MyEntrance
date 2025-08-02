@@ -11,18 +11,14 @@
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splashFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_splashFragment_to_mainNavGraph"
+            app:destination="@id/main_nav_graph" />
         <action
             android:id="@+id/action_splashFragment_to_auth_graph"
             app:destination="@id/auth_graph" />
     </fragment>
 
-    <!-- Вложенный граф авторизации -->
     <include app:graph="@navigation/auth_graph" android:id="@+id/auth_graph"/>
 
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.myentrance.presentation.view.MainFragment"
-        tools:layout="@layout/fragment_main" />
+    <include app:graph="@navigation/main_nav_graph" android:id="@+id/main_nav_graph"/>
 </navigation>

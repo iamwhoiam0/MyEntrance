@@ -1,13 +1,11 @@
-package com.example.myentrance.presentation.view
+package com.example.myentrance.presentation.view.auth
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -57,7 +55,7 @@ class RegisterStep2Fragment : Fragment() {
                         is AuthResult.Success -> {
                             try {
                                 viewModel.resetState()
-                                findNavController().navigate(R.id.action_registerStep2Fragment_to_mainFragment)
+                                findNavController().navigate(R.id.action_registerStep2Fragment_to_main_nav_graph)
                                 Toast.makeText(context, "Регистрация успешно завершена!", Toast.LENGTH_SHORT).show()
                             } catch (e: Exception) {
                                 Toast.makeText(context, "Ошибка навигации: ${e.message}", Toast.LENGTH_LONG).show()

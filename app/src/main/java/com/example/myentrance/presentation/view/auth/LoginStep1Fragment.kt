@@ -1,4 +1,4 @@
-package com.example.myentrance.presentation.view
+package com.example.myentrance.presentation.view.auth
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.myentrance.R
@@ -26,12 +25,9 @@ class LoginStep1Fragment : Fragment() {
     private var _binding: FragmentLoginStep1Binding? = null
     private val binding get() = _binding!!
 
-    // Используйте DI или создайте вручную
     private val viewModel: AuthViewModel by navGraphViewModels(R.id.auth_graph) {
         AuthViewModelFactory(ProvideAuthRepository())
     }
-
-    private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -43,9 +39,9 @@ class LoginStep1Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Отправка OTP
         binding.sendOtpButton.setOnClickListener {
-            val phone = binding.phoneInput.text.toString().trim()
+            //val phone = binding.phoneInput.text.toString().trim()
+            val phone = "+79999999999"
             if (phone.isBlank()) {
                 Toast.makeText(context, "Введите номер телефона", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -63,7 +59,6 @@ class LoginStep1Fragment : Fragment() {
             )
         }
 
-        // Регистрация
         binding.registerButton.setOnClickListener {
             findNavController().navigate(R.id.action_LoginStep1Fragment_to_registerStep1Fragment1)
         }
@@ -73,11 +68,6 @@ class LoginStep1Fragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun getReceiptImageBytes(): ByteArray {
-        // Пример placeholder, реализуйте загрузку из ImageView, файла или камеры
-        return ByteArray(0)
     }
 
     private fun onPhoneNumberExist(){
@@ -93,7 +83,6 @@ class LoginStep1Fragment : Fragment() {
 
                 override fun onVerificationCompleted(p0: PhoneAuthCredential) {
                     Toast.makeText(context, "DA", Toast.LENGTH_SHORT).show()
-
                 }
 
                 override fun onVerificationFailed(p0: FirebaseException) {

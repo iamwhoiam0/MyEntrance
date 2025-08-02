@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="32dp"
-    tools:context=".presentation.view.LoginStep2Fragment">
+    tools:context=".presentation.view.auth.LoginStep2Fragment">
 
 
 <ImageView

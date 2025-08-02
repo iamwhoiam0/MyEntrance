@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/LoginStep1Fragment"
-        android:name="com.example.myentrance.presentation.view.LoginStep1Fragment"
+        android:name="com.example.myentrance.presentation.view.auth.LoginStep1Fragment"
         tools:layout="@layout/fragment_login_step1" >
         <action
             android:id="@+id/action_LoginStep1Fragment_to_LoginStep2Fragment"
@@ -19,16 +19,18 @@
 
     <fragment
         android:id="@+id/LoginStep2Fragment"
-        android:name="com.example.myentrance.presentation.view.LoginStep2Fragment"
+        android:name="com.example.myentrance.presentation.view.auth.LoginStep2Fragment"
         tools:layout="@layout/fragment_login_step2" >
         <action
-            android:id="@+id/action_LoginStep2Fragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_LoginStep2Fragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph"
+            app:popUpTo="@id/auth_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
         android:id="@+id/RegisterStep1Fragment"
-        android:name="com.example.myentrance.presentation.view.RegisterStep1Fragment"
+        android:name="com.example.myentrance.presentation.view.auth.RegisterStep1Fragment"
         tools:layout="@layout/fragment_register_step1" >
         <action
             android:id="@+id/action_RegisterStep1Fragment_to_RegisterStep2Fragment"
@@ -37,10 +39,12 @@
 
     <fragment
         android:id="@+id/RegisterStep2Fragment"
-        android:name="com.example.myentrance.presentation.view.RegisterStep2Fragment"
+        android:name="com.example.myentrance.presentation.view.auth.RegisterStep2Fragment"
         tools:layout="@layout/fragment_register_step2" >
         <action
-            android:id="@+id/action_registerStep2Fragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_registerStep2Fragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph"
+            app:popUpTo="@id/auth_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

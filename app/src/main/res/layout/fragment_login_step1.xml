@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:padding="32dp"
-        tools:context=".presentation.view.LoginStep1Fragment">
+        tools:context=".presentation.view.auth.LoginStep1Fragment">
 
         <!-- Логотип -->
         <ImageView

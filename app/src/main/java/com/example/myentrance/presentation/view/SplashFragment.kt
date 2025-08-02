@@ -26,13 +26,13 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
-            delay(3000)
-            // Проверка статуса авторизации
+            delay(2000)
+
             val sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
             val isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false)
-            // Переход на нужный экран
+
             if (isLoggedIn) {
-                findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
+                findNavController().navigate(R.id.action_splashFragment_to_mainNavGraph)
             } else {
                 findNavController().navigate(R.id.action_splashFragment_to_auth_graph)
             }

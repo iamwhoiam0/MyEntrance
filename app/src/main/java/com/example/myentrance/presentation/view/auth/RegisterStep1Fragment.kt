@@ -1,15 +1,11 @@
-package com.example.myentrance.presentation.view
+package com.example.myentrance.presentation.view.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.myentrance.R
@@ -22,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
-import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 
@@ -54,10 +49,10 @@ class RegisterStep1Fragment : Fragment() {
             val apartment = binding.apartmentInput.text.toString().trim()
             val building = binding.buildingInput.text.toString().trim()
             viewModel.checkUserNotExists(
-                phone = "+79850356722",
+                phone = "+79999999999",
                 onNotExists = {
-                    viewModel.saveRegistrationDraft("+79850356722", "gamzat", "23", "37")
-                    sendRegisterOtp("+79850356722")
+                    viewModel.saveRegistrationDraft("+79999999999", "gamzat", "23", "37")
+                    sendRegisterOtp("+79999999999")
                 },
                 onExists = {
                     Toast.makeText(context, "Регистрация для этого номера уже есть. Пожалуйста, войдите.", Toast.LENGTH_LONG).show()
@@ -66,7 +61,7 @@ class RegisterStep1Fragment : Fragment() {
                     Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
                 }
             )
-            // Простейшая валидация
+            //  валидация
             //if (phone.isBlank() || name.isBlank() || apartment.isBlank() || building.isBlank()) {
             //    Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
             //    return@setOnClickListener
