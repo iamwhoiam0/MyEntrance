@@ -1,41 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Core Palette -->
-    <color name="primary">#FF4A5FC1</color>
-    <color name="primary_variant">#FF3A4FB0</color>
-    <color name="secondary">#FF27AE60</color>
-    <color name="secondary_variant">#FF2ECC71</color>
-    <color name="error">#FFE74C3C</color>
 
-    <!-- Surface & Background -->
-    <color name="surface">#FFFFFFFF</color>
-    <color name="background">#FFF8F9FA</color>
-    <color name="surface_variant">#FFEFF2F6</color>
+    <color name="white">#ffffff</color>
+    <color name="lavender">#8692f7</color>
+    <color name="grey">#d2d2d2</color>
 
-    <!-- Text & Icons -->
-    <color name="on_primary">#FFFFFFFF</color>
-    <color name="on_secondary">#FFFFFFFF</color>
-    <color name="on_surface">#FF212121</color>
-    <color name="on_surface_variant">#FF757575</color>
-    <color name="on_error">#FFFFFFFF</color>
 
-    <!-- States -->
-    <color name="primary_pressed">#FF3949AB</color>
-    <color name="primary_disabled">#B34A5FC1</color>
-    <color name="ripple_primary">#334A5FC1</color>
-
-    <!-- Functional Colors -->
-    <color name="success">#FF27AE60</color>
-    <color name="warning">#FFF39C12</color>
-    <color name="info">#FF3498DB</color>
-    <color name="neutral">#FF95A5A6</color>
-
-    <!-- Borders & Dividers -->
-    <color name="outline">#FFE0E0E0</color>
-    <color name="outline_variant">#FFEEEEEE</color>
-
-    <!-- Special Components -->
-    <color name="fab_background">@color/primary</color>
-    <color name="snackbar_background">#FF333333</color>
-    <color name="progress_track">#33FFFFFF</color>
+    <color name="black">#000</color>
+    <color name="orange">#ffA500</color>
+    <color name="green">#008000</color>
+    <color name="red">#ff0000</color>
 </resources>

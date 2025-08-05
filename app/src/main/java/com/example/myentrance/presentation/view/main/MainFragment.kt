@@ -7,80 +7,92 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.myentrance.R
 import com.example.myentrance.databinding.FragmentMainBinding
+import com.example.myentrance.presentation.viewmodel.MainViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.launch
 
 
 class MainFragment : Fragment() {
 
+    private val viewModel: MainViewModel by viewModels()
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    // Данные фрагменты (создавайте или получайте через DI)
-    private val newsFragment = NewsFragment()
-    private val chatFragment = ChatFragment()
-    private val discussionsFragment = DiscussionsFragment()
-    private val votesFragment = VotesFragment()
-
-    private var activeFragment: Fragment = newsFragment
+    private val tabOrder = listOf(
+        R.id.newsFragment,
+        R.id.chatFragment,
+        R.id.votesFragment
+    )
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        childFragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment, votesFragment, "4")
-            .hide(votesFragment)
-            .commit()
-        childFragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment, discussionsFragment, "3")
-            .hide(discussionsFragment)
-            .commit()
-        childFragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment, chatFragment, "2")
-            .commit()
-        childFragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment, newsFragment, "1")
-            .commit()
+        val navHostFragment = childFragmentManager
+            .findFragmentById(R.id.bottom_nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
 
-        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.navigation_news ->{
-                    switchFragment(newsFragment)
-                    true
-                }
-                R.id.navigation_chat -> {
-                    switchFragment(chatFragment)
-                    true
-                }
-
-                R.id.navigation_discussions -> {
-                    switchFragment(discussionsFragment)
-                    true
-                }
-
-                R.id.navigation_votes -> {
-                    switchFragment(votesFragment)
-                    true
-                }
-                else -> false
-            }
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            viewModel.onTabSelected(item.itemId)
+            true
         }
-    }
 
-    private fun switchFragment(target: Fragment) {
-        if (activeFragment != target) {
-            childFragmentManager.beginTransaction()
-                .hide(activeFragment)
-                .show(target)
-                .commit()
-            activeFragment = target
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateTo.collect { destinationId ->
+                    val currentId = navController.currentDestination?.id
+                    if (currentId == destinationId) return@collect
+
+                    val currentIndex = currentId?.let { tabOrder.indexOf(it) } ?: -1
+                    val destinationIndex = tabOrder.indexOf(destinationId)
+
+                    val (enterAnim, exitAnim, popEnterAnim, popExitAnim) = if (destinationIndex > currentIndex) {
+                        listOf(
+                            R.anim.slide_in_right,
+                            R.anim.slide_out_left,
+                            R.anim.slide_in_left,
+                            R.anim.slide_out_right
+                        )
+                    } else {
+                        listOf(
+                            R.anim.slide_in_left,
+                            R.anim.slide_out_right,
+                            R.anim.slide_in_right,
+                            R.anim.slide_out_left
+                        )
+                    }
+
+                    navController.navigate(
+                        destinationId, null,
+                        NavOptions.Builder()
+                            .setLaunchSingleTop(true)
+                            .setEnterAnim(enterAnim)
+                            .setExitAnim(exitAnim)
+                            .setPopEnterAnim(popEnterAnim)
+                            .setPopExitAnim(popExitAnim)
+                            .setPopUpTo(R.id.newsFragment, false) // из-за этой строчки сбрасывается стек и неккоректно отрабатывает анимация при переходе с любого фрагмента на 1
+                            .build()
+                    )
+
+                    binding.bottomNavigation.selectedItemId = destinationId
+                }
+            }
         }
     }
 
@@ -89,3 +101,4 @@ class MainFragment : Fragment() {
         _binding = null
     }
 }
+

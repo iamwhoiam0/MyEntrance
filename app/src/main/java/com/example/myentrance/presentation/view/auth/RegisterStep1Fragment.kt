@@ -27,7 +27,7 @@ class RegisterStep1Fragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: AuthViewModel by navGraphViewModels(R.id.auth_graph) {
-        AuthViewModelFactory(ProvideAuthRepository())
+        AuthViewModelFactory(requireContext())
     }
 
 
@@ -70,7 +70,6 @@ class RegisterStep1Fragment : Fragment() {
         }
     }
 
-    // Метод отправки OTP для регистрации через Firebase
     private fun sendRegisterOtp(phone: String) {
         val options = PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
             .setPhoneNumber(phone)

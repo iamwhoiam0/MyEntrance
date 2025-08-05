@@ -26,7 +26,7 @@ class LoginStep1Fragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: AuthViewModel by navGraphViewModels(R.id.auth_graph) {
-        AuthViewModelFactory(ProvideAuthRepository())
+        AuthViewModelFactory(requireContext())
     }
 
     override fun onCreateView(

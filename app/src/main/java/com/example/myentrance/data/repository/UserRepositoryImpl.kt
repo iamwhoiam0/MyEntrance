@@ -43,7 +43,6 @@ class UserRepositoryImpl(
     }
 
     override suspend fun searchUsers(query: String): List<User> {
-        // Простой пример поиска по имени
         val snap = firestore.collection("users")
             .whereEqualTo("name", query)
             .get().await()

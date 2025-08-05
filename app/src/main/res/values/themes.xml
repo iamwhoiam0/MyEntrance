@@ -1,9 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Базовая тема приложения, на которой будет основана твоя главная тема -->
     <style name="Base.Theme.MyEntrance" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Здесь можно переопределить базовые цвета для темы -->
+        <!-- Например: -->
+        <!-- <item name="colorPrimary">@color/my_primary_color</item> -->
+        <!-- <item name="colorOnPrimary">@color/my_on_primary</item> -->
     </style>
 
-    <style name="Theme.MyEntrance" parent="Base.Theme.MyEntrance" />
+    <style name="Theme.MyEntrance" parent="Base.Theme.MyEntrance">
+
+    </style>
 </resources>

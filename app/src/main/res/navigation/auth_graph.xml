@@ -22,8 +22,8 @@
         android:name="com.example.myentrance.presentation.view.auth.LoginStep2Fragment"
         tools:layout="@layout/fragment_login_step2" >
         <action
-            android:id="@+id/action_LoginStep2Fragment_to_main_nav_graph"
-            app:destination="@id/main_nav_graph"
+            android:id="@+id/action_LoginStep2Fragment_to_mainFragment"
+            app:destination="@id/mainFragment"
             app:popUpTo="@id/auth_graph"
             app:popUpToInclusive="true" />
     </fragment>
@@ -42,8 +42,8 @@
         android:name="com.example.myentrance.presentation.view.auth.RegisterStep2Fragment"
         tools:layout="@layout/fragment_register_step2" >
         <action
-            android:id="@+id/action_registerStep2Fragment_to_main_nav_graph"
-            app:destination="@id/main_nav_graph"
+            android:id="@+id/action_RegisterStep2Fragment_to_mainFragment"
+            app:destination="@id/mainFragment"
             app:popUpTo="@id/auth_graph"
             app:popUpToInclusive="true" />
     </fragment>

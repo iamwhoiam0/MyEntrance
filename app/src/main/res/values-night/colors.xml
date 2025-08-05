@@ -1,41 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Core Palette -->
-    <color name="primary">#FF6B7CE8</color>
-    <color name="primary_variant">#FF5A6BD6</color>
-    <color name="secondary">#FF34D178</color>
-    <color name="secondary_variant">#FF2ECC71</color>
-    <color name="error">#FFE74C3C</color>
 
-    <!-- Surface & Background -->
-    <color name="surface">#FF121212</color>
-    <color name="background">#FF000000</color>
-    <color name="surface_variant">#FF242424</color>
-
-    <!-- Text & Icons -->
-    <color name="on_primary">#FFFFFFFF</color>
-    <color name="on_secondary">#FF000000</color>
-    <color name="on_surface">#FFE0E0E0</color>
-    <color name="on_surface_variant">#FFBDBDBD</color>
-    <color name="on_error">#FFFFFFFF</color>
-
-    <!-- States -->
-    <color name="primary_pressed">#FF5D6BC0</color>
-    <color name="primary_disabled">#806B7CE8</color>
-    <color name="ripple_primary">#336B7CE8</color>
-
-    <!-- Functional Colors -->
-    <color name="success">#FF34D178</color>
-    <color name="warning">#FFF39C12</color>
-    <color name="info">#FF3498DB</color>
-    <color name="neutral">#FF95A5A6</color>
-
-    <!-- Borders & Dividers -->
-    <color name="outline">#FF424242</color>
-    <color name="outline_variant">#FF333333</color>
-
-    <!-- Special Components -->
-    <color name="fab_background">@color/primary</color>
-    <color name="snackbar_background">#FF424242</color>
-    <color name="progress_track">#33FFFFFF</color>
 </resources>

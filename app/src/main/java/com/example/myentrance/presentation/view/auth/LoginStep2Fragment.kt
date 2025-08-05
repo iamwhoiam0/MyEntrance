@@ -27,7 +27,7 @@ class LoginStep2Fragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: AuthViewModel by navGraphViewModels(R.id.auth_graph) {
-        AuthViewModelFactory(ProvideAuthRepository())
+        AuthViewModelFactory(requireContext())
     }
 
     override fun onCreateView(
@@ -51,13 +51,13 @@ class LoginStep2Fragment : Fragment() {
                 viewModel.authState.collectLatest { state ->
                 when (state) {
                     is AuthResult.Loading -> {
-                        // Показывай прогресс-бар, делай поля неактивными
+                        // Добавить в дальнейшем прогресс бар
                         binding.confirmOtpButton.isClickable = false
                     }
                     is AuthResult.Success -> {
                         viewModel.resetState()
                         try {
-                            findNavController().navigate(R.id.action_LoginStep2Fragment_to_main_nav_graph)
+                            findNavController().navigate(R.id.action_LoginStep2Fragment_to_mainFragment)
                         } catch (e: Exception) {
                             Log.e("LoginStep2Fragment","Ошибка навигации: ${e.message}", e)
                         }

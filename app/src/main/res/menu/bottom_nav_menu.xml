@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
 
-        android:id="@+id/navigation_news"
+        android:id="@+id/newsFragment"
         android:icon="@drawable/ic_news"
         android:title="Новости" />
     <item
-        android:id="@+id/navigation_chat"
+        android:id="@+id/chatFragment"
         android:icon="@drawable/ic_chat"
         android:title="Чат" />
 
-    <item
-        android:id="@+id/navigation_discussions"
-        android:icon="@drawable/ic_forum"
-        android:title="Обсуждения" />
+<!--    <item-->
+<!--        android:id="@+id/discussionsFragment"-->
+<!--        android:icon="@drawable/ic_forum"-->
+<!--        android:title="Обсуждения" />-->
 
     <item
-        android:id="@+id/navigation_votes"
+        android:id="@+id/votesFragment"
         android:icon="@drawable/ic_vote"
         android:title="Голосования" />
 

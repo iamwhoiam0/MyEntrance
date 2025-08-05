@@ -26,7 +26,7 @@ class RegisterStep2Fragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: AuthViewModel by navGraphViewModels(R.id.auth_graph) {
-        AuthViewModelFactory(ProvideAuthRepository())
+        AuthViewModelFactory(requireContext())
     }
 
     override fun onCreateView(
@@ -55,7 +55,7 @@ class RegisterStep2Fragment : Fragment() {
                         is AuthResult.Success -> {
                             try {
                                 viewModel.resetState()
-                                findNavController().navigate(R.id.action_registerStep2Fragment_to_main_nav_graph)
+                                findNavController().navigate(R.id.action_RegisterStep2Fragment_to_mainFragment)
                                 Toast.makeText(context, "Регистрация успешно завершена!", Toast.LENGTH_SHORT).show()
                             } catch (e: Exception) {
                                 Toast.makeText(context, "Ошибка навигации: ${e.message}", Toast.LENGTH_LONG).show()
@@ -65,7 +65,7 @@ class RegisterStep2Fragment : Fragment() {
                             Toast.makeText(context, "Ошибка: ${state.message}", Toast.LENGTH_SHORT).show()
                         }
                         is AuthResult.Loading -> {
-                            // Показывайте loader при необходимости
+                            // Добавить загрузчик
                         }
                         null -> {}
                     }

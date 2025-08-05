@@ -1,22 +1,21 @@
 package com.example.myentrance.data.repository
 
-import android.util.Log
 import com.example.myentrance.domain.entities.AuthResult
 import com.example.myentrance.domain.entities.Role
-import com.google.firebase.auth.FirebaseAuth
 import com.example.myentrance.domain.entities.User
 import com.example.myentrance.domain.repository.AuthRepository
+import com.example.myentrance.presentation.UserSessionManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
 
 class AuthRepositoryImpl(
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance(),
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance(),
-    private val storage: FirebaseStorage = FirebaseStorage.getInstance()
+    private val userSessionManager: UserSessionManager
 ) : AuthRepository {
 
 
@@ -25,17 +24,19 @@ class AuthRepositoryImpl(
             if (verificationId.isBlank()) return AuthResult.Error("Не получен verificationId")
             val credential = PhoneAuthProvider.getCredential(verificationId, otp)
             val result = firebaseAuth.signInWithCredential(credential).await()
-            val firebaseUser = result.user
-            val user = firebaseUser?.let { fetchDomainUser(it) }
-            if (user != null)
+            val firebaseUser = result.user ?: return AuthResult.Error("Пользователь не найден")
+
+            val user = fetchDomainUser(firebaseUser)
+            if (user != null) {
+                userSessionManager.saveUser(user)
                 AuthResult.Success(user, token = firebaseUser.getIdToken(false).await().token ?: "")
-            else
+            } else {
                 AuthResult.Error("Профиль пользователя не найден")
+            }
         } catch (e: Exception) {
             AuthResult.Error(e.message ?: "Ошибка входа")
         }
     }
-
 
     override suspend fun register(
         name: String,
@@ -43,16 +44,9 @@ class AuthRepositoryImpl(
         apartmentNumber: String,
         buildingId: String
     ): AuthResult {
-        return try {
-            // Получение sms-credential и регистрация пользователя — происходит из UI слоя через callback
-            // Здесь предполагается, что пользователь уже авторизован через Firebase по номеру
+        try {
+            val currentUser = firebaseAuth.currentUser ?: return AuthResult.Error("Сначала подтвердите номер по SMS")
 
-            val currentUser = firebaseAuth.currentUser
-                ?: return AuthResult.Error("Сначала подтвердите номер по SMS")
-
-            Log.d("AuthRepositoryImpl", "CurrentUser UID: ${currentUser.uid}")
-
-            // Формируем профиль пользователя в Firestore
             val userDoc = hashMapOf(
                 "name" to name,
                 "phoneNumber" to phone,
@@ -69,37 +63,25 @@ class AuthRepositoryImpl(
                 .await()
 
             delay(500)
-            return try {
-                val user = fetchDomainUser(currentUser) // повторное чтение профиля
-                AuthResult.Success(user, token = currentUser.getIdToken(false).await().token ?: "")
-            } catch (e: Exception) {
-                AuthResult.Error("Ошибка получения профиля после регистрации: ${e.message}")
+
+            val user = fetchDomainUser(currentUser)
+            if (user != null) {
+                userSessionManager.saveUser(user)
+                return AuthResult.Success(user, token = currentUser.getIdToken(false).await().token ?: "")
             }
+            return AuthResult.Error("Ошибка получения профиля после регистрации")
         } catch (e: Exception) {
-            AuthResult.Error(e.message ?: "Ошибка регистрации")
+            return AuthResult.Error(e.message ?: "Ошибка регистрации")
         }
     }
 
     override suspend fun logout() {
         firebaseAuth.signOut()
+        userSessionManager.clearSession()
     }
 
     override fun getCurrentUser(): User? {
-        val firebaseUser = firebaseAuth.currentUser
-        return firebaseUser?.let {
-            // Здесь только ID, имя и телефон, остальное — через Firestore (асинхронно)
-            User(
-                id = it.uid,
-                name = it.displayName ?: "",
-                phoneNumber = it.phoneNumber ?: "",
-                role = Role.RESIDENT,
-                isVerified = false,
-                lastLoginAt = it.metadata?.lastSignInTimestamp ?: 0,
-                description = "",
-                apartmentNumber = "",
-                buildingId = "",
-            )
-        }
+        return userSessionManager.currentUser.value
     }
 
     override suspend fun getUserByPhone(phone: String): User? {
