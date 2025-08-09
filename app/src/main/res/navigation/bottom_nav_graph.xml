@@ -22,20 +22,19 @@
         tools:layout="@layout/fragment_chat" />
 
     <fragment
-        android:id="@+id/discussionsFragment"
-        android:name="com.example.myentrance.presentation.view.main.DiscussionsFragment"
-        android:label="Обсуждения"
-        tools:layout="@layout/fragment_discussions" />
-
-    <fragment
-        android:id="@+id/votesFragment"
-        android:name="com.example.myentrance.presentation.view.main.VotesFragment"
-        android:label="Голосования"
-        tools:layout="@layout/fragment_votes" />
-    <fragment
         android:id="@+id/createNewsFragment"
         android:name="com.example.myentrance.presentation.view.main.CreateNewsFragment"
         android:label="fragment_create_news"
         tools:layout="@layout/fragment_create_news" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.myentrance.presentation.view.main.ProfileFragment"
+        android:label="ProfileFragment">
+        <action
+            android:id="@+id/action_profileFragment_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

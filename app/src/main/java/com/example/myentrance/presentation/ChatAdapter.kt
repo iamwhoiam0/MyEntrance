@@ -6,19 +6,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myentrance.databinding.ItemChatImageBinding
 import com.example.myentrance.databinding.ItemChatTextBinding
-import com.example.myentrance.domain.entities.ChatMessage
+import com.example.myentrance.R
+import com.example.myentrance.domain.entities.ChatMessageWithProfile
 
-class ChatAdapter(private val currentUserId: String) : ListAdapter<ChatMessage, RecyclerView.ViewHolder>(DiffCallback()) {
+class ChatAdapter(private val currentUserId: String) : ListAdapter<ChatMessageWithProfile, RecyclerView.ViewHolder>(DiffCallback()) {
 
     companion object {
         private const val TYPE_TEXT = 1
         private const val TYPE_IMAGE = 2
 
-        class DiffCallback : DiffUtil.ItemCallback<ChatMessage>() {
-            override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage) = oldItem.id == newItem.id
-            override fun areContentsTheSame(oldItem: ChatMessage, newItem: ChatMessage) = oldItem == newItem
+        class DiffCallback : DiffUtil.ItemCallback<ChatMessageWithProfile>() {
+            override fun areItemsTheSame(oldItem: ChatMessageWithProfile, newItem: ChatMessageWithProfile) = oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: ChatMessageWithProfile, newItem: ChatMessageWithProfile) = oldItem == newItem
         }
     }
 
@@ -44,21 +46,35 @@ class ChatAdapter(private val currentUserId: String) : ListAdapter<ChatMessage, 
     }
 
     class TextMessageViewHolder(private val binding: ItemChatTextBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(message: ChatMessage, isMine: Boolean) {
+        fun bind(message: ChatMessageWithProfile, isMine: Boolean) {
             binding.textViewMessage.text = message.text
             //binding.root.gravity = if (isMine) Gravity.END else Gravity.START  // Поправить реализацию чтобы текст сдвигался в зависимости от отправителя
             binding.textViewSender.text = message.senderName
+            Glide.with(binding.imageViewSenderAvatar.context)
+                .load(message.senderAvatarUrl)
+                .placeholder(R.drawable.ic_profile)
+                .circleCrop()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(binding.imageViewSenderAvatar)
         }
     }
 
     class ImageMessageViewHolder(private val binding: ItemChatImageBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(message: ChatMessage, isMine: Boolean) {
+        fun bind(message: ChatMessageWithProfile, isMine: Boolean) {
             Glide.with(binding.imageViewMessage.context)
                 .load(message.imageUrl)
                 .into(binding.imageViewMessage)
 
             //binding.root.gravity = if (isMine) Gravity.END else Gravity.START // Поправить реализацию чтобы текст сдвигался в зависимости от отправителя
             binding.textViewSender.text = message.senderName
+            Glide.with(binding.imageViewSenderAvatar.context)
+                .load(message.senderAvatarUrl)
+                .placeholder(R.drawable.ic_profile)
+                .circleCrop()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(binding.imageViewSenderAvatar)
         }
     }
 }

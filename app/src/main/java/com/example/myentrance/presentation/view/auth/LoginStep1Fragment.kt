@@ -40,8 +40,8 @@ class LoginStep1Fragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.sendOtpButton.setOnClickListener {
-            //val phone = binding.phoneInput.text.toString().trim()
-            val phone = "+79999999999"
+            val phone = binding.phoneInput.text.toString().trim()
+            //val phone = "+79999999999"
             if (phone.isBlank()) {
                 Toast.makeText(context, "Введите номер телефона", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener

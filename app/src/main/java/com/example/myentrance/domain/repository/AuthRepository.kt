@@ -10,4 +10,6 @@ interface AuthRepository {
     suspend fun logout()
     fun getCurrentUser(): User?
     suspend fun getUserByPhone(phone: String): User?
+
+    suspend fun saveCurrentUser(user: User)
 }

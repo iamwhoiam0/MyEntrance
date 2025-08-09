@@ -1,83 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loginStep1Layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:padding="32dp"
+    android:background="@color/colorBackground"
+    tools:context=".presentation.view.auth.LoginStep1Fragment">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/loginStep1Layout"
-        android:orientation="vertical"
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/app_logo"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Добро пожаловать!"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/colorOnBackground"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phoneInputLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:padding="32dp"
-        tools:context=".presentation.view.auth.LoginStep1Fragment">
+        android:layout_height="wrap_content"
+        android:hint="Телефон"
+        android:layout_marginTop="28dp"
+        app:startIconTint="@null"
+        app:startIconDrawable="@drawable/ic_default_flag"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/colorPrimary"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:hintTextColor="@color/colorHint">
 
-        <!-- Логотип -->
-        <ImageView
-            android:id="@+id/logoImage"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/logo"
-            android:contentDescription="@string/app_logo"
-            android:layout_gravity="center"/>
-
-        <!-- Приветствие -->
-        <TextView
-            android:id="@+id/welcomeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Добро пожаловать!"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginTop="16dp"/>
-
-        <!-- Поле ввода телефона с флагом -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="32dp"
-            android:orientation="horizontal"
-            android:background="@drawable/phone_input_border"
-            android:gravity="center_vertical">
-
-            <!-- Флаг страны -->
-            <ImageView
-                android:id="@+id/countryFlagView"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_default_flag"
-                android:layout_marginStart="8dp"
-                android:contentDescription="Страна"/>
-
-            <!-- Телефон -->
-            <EditText
-                android:id="@+id/phoneInput"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="+7"
-                android:inputType="phone"
-                android:paddingStart="12dp"
-                android:background="@android:color/transparent"
-                android:textSize="16sp"/>
-        </LinearLayout>
-
-        <!-- Кнопка "Получить код" -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/sendOtpButton"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phoneInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Войти"
-            android:layout_marginTop="24dp"/>
+            android:hint=""
+            android:paddingStart="40dp"
+            android:inputType="phone"
+            android:textColor="@color/colorOnSurface"
+            android:textColorHint="@color/colorHint"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Кнопка "Зарегистрироваться" -->
-        <Button
-            android:id="@+id/registerButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Зарегистрироваться"
-            android:textAllCaps="false"
-            android:layout_marginTop="12dp"
-            android:background="@null"
-            android:textColor="#fff"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sendOtpButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Войти"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/colorOnPrimary"
+        android:backgroundTint="@color/colorPrimary"
+        app:rippleColor="@color/colorAccent"/>
 
-    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/registerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Зарегистрироваться"
+        android:textAllCaps="false"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/colorOnPrimary"
+        android:backgroundTint="@color/colorPrimaryVariant"
+        app:rippleColor="@color/colorAccent"/>
+
+</LinearLayout>

@@ -11,19 +11,19 @@ import com.example.myentrance.domain.entities.AuthResult
 import com.example.myentrance.domain.entities.User
 import com.example.myentrance.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class AuthViewModel(
-    private val authRepository: AuthRepository,
-    // Возможно, добавить другие репозитории по мере необходимости
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    // --- Внутренне состояние для процесса ---
     private val _phone = MutableStateFlow("")
     val phone: StateFlow<String> = _phone
 
@@ -129,18 +129,23 @@ class AuthViewModel(
         }
         viewModelScope.launch {
             _progress.value = true
-            val result = authRepository.login(reg.phone, otp, id)
-            if (result is AuthResult.Success) {
-                val regRes = authRepository.register(
-                    phone = reg.phone,
-                    name = reg.name,
-                    apartmentNumber = reg.apartment,
-                    buildingId = reg.building
-                )
-                _authState.value = regRes
-            } else {
-                _authState.value = result
+
+            val credential = PhoneAuthProvider.getCredential(id, otp)
+            val result = FirebaseAuth.getInstance().signInWithCredential(credential).await()
+            val firebaseUser = result.user
+            if (firebaseUser == null) {
+                _authState.value = AuthResult.Error("Ошибка входа: Пользователь не найден после подтверждения")
+                _progress.value = false
+                return@launch
             }
+
+            val regRes = authRepository.register(
+                phone = reg.phone,
+                name = reg.name,
+                apartmentNumber = reg.apartment,
+                buildingId = reg.building
+            )
+            _authState.value = regRes
             _progress.value = false
         }
     }

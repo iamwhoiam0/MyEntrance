@@ -1,11 +1,9 @@
 package com.example.myentrance.presentation.view.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -13,25 +11,21 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.example.myentrance.R
 import com.example.myentrance.databinding.FragmentMainBinding
 import com.example.myentrance.presentation.viewmodel.MainViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
-
 
 class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
-
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
     private val tabOrder = listOf(
         R.id.newsFragment,
         R.id.chatFragment,
-        R.id.votesFragment
+        R.id.profileFragment
     )
 
     override fun onCreateView(
@@ -82,11 +76,12 @@ class MainFragment : Fragment() {
                         destinationId, null,
                         NavOptions.Builder()
                             .setLaunchSingleTop(true)
+                            .setRestoreState(true)
                             .setEnterAnim(enterAnim)
                             .setExitAnim(exitAnim)
                             .setPopEnterAnim(popEnterAnim)
                             .setPopExitAnim(popExitAnim)
-                            .setPopUpTo(R.id.newsFragment, false) // из-за этой строчки сбрасывается стек и неккоректно отрабатывает анимация при переходе с любого фрагмента на 1
+                            .setPopUpTo(R.id.bottom_nav_graph, inclusive = true, saveState = true)
                             .build()
                     )
 
@@ -101,4 +96,3 @@ class MainFragment : Fragment() {
         _binding = null
     }
 }
-

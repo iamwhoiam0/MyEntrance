@@ -47,7 +47,7 @@ class NewsViewModel(
             userName = user.name
         )
         viewModelScope.launch {
-            val result = newsRepository.addNews(news, imageUri) // Не работает добавление фото, вылезает ошибкка
+            val result = newsRepository.addNews(news, imageUri)
             _addNewsResult.emit(result)
             if (result is Result.Success) {
                 loadNews()

@@ -5,9 +5,22 @@
     android:id="@+id/chatRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/windowBackground">
+    android:background="@color/colorBackground">
 
-    <!-- RecyclerView для отображения списка сообщений -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/chatToolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:title="Название чата"
+        android:titleTextColor="@color/colorOnPrimary"
+        app:titleCentered="true"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/colorOnPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMessages"
         android:layout_width="0dp"
@@ -15,60 +28,72 @@
         android:clipToPadding="false"
         android:paddingBottom="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chatToolbar"
         app:layout_constraintBottom_toTopOf="@id/messageInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Низ экрана: поле ввода, кнопка вложения и кнопка отправки -->
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/messageInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:orientation="horizontal"
-        android:background="?attr/colorSurface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:elevation="4dp">
+        app:cardBackgroundColor="@color/colorSurface">
 
-        <!-- Кнопка вложения (иконка для добавления фото, например) -->
-        <ImageButton
-            android:id="@+id/buttonAttach"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="прикрепить файл"
-            android:padding="8dp"
-            android:src="@drawable/ic_attach"
-            app:tint="?attr/colorOnSurface" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="8dp">
 
-        <!-- Поле ввода текста сообщения -->
-        <EditText
-            android:id="@+id/editTextMessage"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_background"
-            android:hint="Введите текст"
-            android:inputType="textMultiLine"
-            android:maxLines="4"
-            android:paddingHorizontal="12dp"
-            android:textColor="?attr/colorOnSurface"
-            android:textColorHint="?attr/colorOnSurfaceVariant"
-            android:imeOptions="actionSend" />
+            <ImageButton
+                android:id="@+id/buttonAttach"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="прикрепить файл"
+                android:padding="8dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_attach"
+                app:tint="@color/colorOnSurface" />
 
-        <!-- Кнопка отправки сообщения -->
-        <ImageButton
-            android:id="@+id/buttonSend"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Отправить"
-            android:padding="8dp"
-            android:src="@drawable/ic_send"
-            app:tint="?attr/colorPrimary" />
-    </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:boxBackgroundMode="filled"
+                app:boxCornerRadiusTopStart="24dp"
+                app:boxCornerRadiusBottomStart="24dp"
+                app:boxCornerRadiusTopEnd="24dp"
+                app:boxCornerRadiusBottomEnd="24dp"
+                app:boxBackgroundColor="@color/colorBackground">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorOnSurface"
+                    android:textColorHint="@color/colorHint"
+                    android:background="@android:color/transparent"
+                    android:inputType="textMultiLine"
+                    android:maxLines="4"
+                    android:text="Hello"
+                    android:imeOptions="actionSend"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/buttonSend"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Отправить"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:src="@drawable/ic_send"
+                app:tint="@color/colorPrimary" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

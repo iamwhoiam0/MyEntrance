@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Основные цвета -->
+    <color name="colorPrimary">#3A8DFF</color>
+    <color name="colorPrimaryVariant">#2F6FCC</color>
+    <color name="colorSecondary">#28C76F</color>
+    <color name="colorSecondaryVariant">#00B8D9</color>
+    <color name="colorAccent">#FFC107</color>
 
+    <!-- Фоны -->
+    <color name="colorBackground">#121212</color>
+    <color name="colorSurface">#1E1E1E</color>
+
+    <!-- Цвета текста -->
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
+    <color name="colorOnAccent">#000000</color>
+    <color name="colorOnBackground">#FFFFFF</color>
+    <color name="colorOnSurface">#FFFFFF</color>
+    <color name="colorHint">#A0A0A0</color>
+    <color name="colorOutline">#808080</color>
 </resources>

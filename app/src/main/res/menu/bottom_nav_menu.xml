@@ -15,9 +15,13 @@
 <!--        android:icon="@drawable/ic_forum"-->
 <!--        android:title="Обсуждения" />-->
 
+<!--    <item-->
+<!--        android:id="@+id/votesFragment"-->
+<!--        android:icon="@drawable/ic_vote"-->
+<!--        android:title="Голосования" />-->
     <item
-        android:id="@+id/votesFragment"
-        android:icon="@drawable/ic_vote"
-        android:title="Голосования" />
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_profile"
+        android:title="Профиль" />
 
 </menu>

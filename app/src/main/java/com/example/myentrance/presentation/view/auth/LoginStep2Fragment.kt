@@ -69,7 +69,7 @@ class LoginStep2Fragment : Fragment() {
                         Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
                     }
                     null -> {
-
+                        // не знаю как избавиться от блока, пока пусть будет так :)
                     }
                     }
                 }

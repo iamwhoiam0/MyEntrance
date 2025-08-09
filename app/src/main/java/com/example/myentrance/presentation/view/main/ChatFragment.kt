@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.myentrance.MyEntranceApp
@@ -17,7 +18,10 @@ import com.example.myentrance.presentation.viewmodel.ChatViewModel
 import com.example.myentrance.presentation.viewmodel.ChatViewModelFactory
 import com.example.myentrance.presentation.viewmodel.ProvideChatRepository
 import com.example.myentrance.domain.entities.Result
+import com.example.myentrance.domain.repository.AuthRepository
+import com.example.myentrance.domain.repository.ChatRepository
 import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 class ChatFragment : Fragment() {
@@ -28,22 +32,17 @@ class ChatFragment : Fragment() {
     private val supabaseClient by lazy {
         (requireActivity().application as MyEntranceApp).supabaseClient
     }
-    private val authRepository by lazy {
+
+    private val authRepository: AuthRepository by lazy {
         ProvideAuthRepository(requireContext())
     }
 
-    private val chatRepository by lazy {
-        ProvideChatRepository(requireContext(), supabaseClient)
-    }
-    private val chatViewModel: ChatViewModel by viewModels {
-        ChatViewModelFactory(chatRepository, authRepository)
-    }
+    private lateinit var chatRepository: ChatRepository
+    private lateinit var chatViewModel: ChatViewModel
 
     private lateinit var adapter: ChatAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentChatBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -51,16 +50,27 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentUserId = authRepository.getCurrentUser()?.id ?: ""
+        val currentUser = authRepository.getCurrentUser()
+        val buildingId = currentUser?.buildingId ?: "default_building"
+
+        chatRepository = ProvideChatRepository(requireContext(), supabaseClient, buildingId)
+
+        val firestore = FirebaseFirestore.getInstance()
+
+        chatViewModel = ViewModelProvider(
+            this,
+            ChatViewModelFactory(chatRepository, authRepository, firestore)
+        )[ChatViewModel::class.java]
+
+        val currentUserId = currentUser?.id ?: ""
         adapter = ChatAdapter(currentUserId)
         binding.recyclerViewMessages.adapter = adapter
 
-        // подписка на обновление
+        // Подписка на обновление сообщений
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 chatViewModel.messages.collect { messages ->
                     adapter.submitList(messages)
-                    // Прокрутка к последнему сообщению
                     if (messages.isNotEmpty()) {
                         binding.recyclerViewMessages.scrollToPosition(messages.size - 1)
                     }
@@ -69,10 +79,9 @@ class ChatFragment : Fragment() {
         }
 
         binding.buttonSend.setOnClickListener {
-            val text = binding.editTextMessage.text.toString().trim()
-            if (text.isNotEmpty()) {
-                chatViewModel.sendMessage(text)
-                binding.editTextMessage.text.clear()
+            binding.editTextMessage.text?.let {
+                chatViewModel.sendMessage(it.toString())
+                it.clear()
             }
         }
 
@@ -85,23 +94,24 @@ class ChatFragment : Fragment() {
                 }
             }
         }
-        // TODO: Кнопка вложения, обработка загрузки фото:
+
+        // TODO: Кнопка вложения, обработка загрузки фото
         binding.buttonAttach.setOnClickListener {
-            // Здесь должен быть вызов диалога выбора картинки и передача URI в chatViewModel.uploadAttachment
-            // После получения результата вызов sendMessage с imageUrl
+
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                chatViewModel.uploadAttachmentResult.collect { result ->
-                    if (result is Result.Success) {
-                        chatViewModel.sendMessage("", result.data)
-                    } else if (result is Result.Failure) {
-                        Toast.makeText(context, "Ошибка загрузки фото", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
+        // Обработка результата загрузки вложения
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                chatViewModel.uploadAttachmentResult.collect { result ->
+//                    if (result is Result.Success) {
+//                        chatViewModel.sendMessage("", result.data) // Отправляем пустое сообщение с картинкой
+//                    } else if (result is Result.Failure) {
+//                        Toast.makeText(context, "Ошибка загрузки фото", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            }
+//        }
     }
 
     override fun onDestroyView() {
@@ -109,4 +119,3 @@ class ChatFragment : Fragment() {
         _binding = null
     }
 }
-

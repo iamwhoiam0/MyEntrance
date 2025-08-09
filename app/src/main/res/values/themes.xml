@@ -1,13 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Базовая тема приложения, на которой будет основана твоя главная тема -->
     <style name="Base.Theme.MyEntrance" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Здесь можно переопределить базовые цвета для темы -->
-        <!-- Например: -->
-        <!-- <item name="colorPrimary">@color/my_primary_color</item> -->
-        <!-- <item name="colorOnPrimary">@color/my_on_primary</item> -->
+        <!-- Основные цвета палитры -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorError">#B00020</item>
     </style>
 
     <style name="Theme.MyEntrance" parent="Base.Theme.MyEntrance">
-
+        <!-- Добавьте ваши кастомные атрибуты и стили здесь -->
     </style>
+
 </resources>

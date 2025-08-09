@@ -42,17 +42,22 @@ class RegisterStep1Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Кнопка "Продолжить"
         binding.continueButton.setOnClickListener {
-            val phone = binding.phoneInput.text.toString().trim()
-            val name = binding.nameInput.text.toString().trim()
-            val apartment = binding.apartmentInput.text.toString().trim()
-            val building = binding.buildingInput.text.toString().trim()
+            val phone = "+79850356722"//binding.phoneInput.text.toString().trim()
+            val name = "abdul"//binding.nameInput.text.toString().trim()
+            val apartment = "32"//binding.apartmentInput.text.toString().trim()
+            val building = "15"//binding.buildingInput.text.toString().trim()
+
+            if (phone.isBlank() || name.isBlank() || apartment.isBlank() || building.isBlank()) {
+                Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             viewModel.checkUserNotExists(
-                phone = "+79999999999",
+                phone = phone,
                 onNotExists = {
-                    viewModel.saveRegistrationDraft("+79999999999", "gamzat", "23", "37")
-                    sendRegisterOtp("+79999999999")
+                    viewModel.saveRegistrationDraft(phone, name, apartment, building)
+                    sendRegisterOtp(phone)
                 },
                 onExists = {
                     Toast.makeText(context, "Регистрация для этого номера уже есть. Пожалуйста, войдите.", Toast.LENGTH_LONG).show()
@@ -61,12 +66,6 @@ class RegisterStep1Fragment : Fragment() {
                     Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
                 }
             )
-            //  валидация
-            //if (phone.isBlank() || name.isBlank() || apartment.isBlank() || building.isBlank()) {
-            //    Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
-            //    return@setOnClickListener
-            //}
-            //viewModel.saveRegistrationDraft(phone, name, apartment, building)
         }
     }
 

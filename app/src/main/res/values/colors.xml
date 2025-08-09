@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Основные цвета -->
+    <color name="colorPrimary">#3A8DFF</color>
+    <color name="colorPrimaryVariant">#005ECC</color>
+    <color name="colorSecondary">#28C76F</color>
+    <color name="colorSecondaryVariant">#00B8D9</color>
+    <color name="colorAccent">#FFC107</color>
 
-    <color name="white">#ffffff</color>
-    <color name="lavender">#8692f7</color>
-    <color name="grey">#d2d2d2</color>
+    <!-- Фоны -->
+    <color name="colorBackground">#F7F9FC</color>
+    <color name="colorSurface">#FFFFFF</color>
 
-
-    <color name="black">#000</color>
-    <color name="orange">#ffA500</color>
-    <color name="green">#008000</color>
-    <color name="red">#ff0000</color>
+    <!-- Цвета текста -->
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
+    <color name="colorOnAccent">#000000</color>
+    <color name="colorOnBackground">#000000</color>
+    <color name="colorOnSurface">#000000</color>
+    <color name="colorHint">#808080</color>
+    <color name="colorOutline">#B0B0B0</color>
 </resources>
