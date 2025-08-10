@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.myentrance.R
@@ -20,16 +21,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
-
+@AndroidEntryPoint
 class LoginStep1Fragment : Fragment() {
 
     private var _binding: FragmentLoginStep1Binding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AuthViewModel by navGraphViewModels(R.id.auth_graph) {
-        AuthViewModelFactory(requireContext())
-    }
+    private val viewModel: AuthViewModel by navGraphViewModels(R.id.auth_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

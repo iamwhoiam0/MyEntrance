@@ -2,10 +2,12 @@ package com.example.myentrance
 
 import android.app.Application
 import com.example.myentrance.presentation.UserSessionManager
+import dagger.hilt.android.HiltAndroidApp
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.storage.Storage
 
+@HiltAndroidApp
 class MyEntranceApp : Application() {
 
     val supabaseClient by lazy {

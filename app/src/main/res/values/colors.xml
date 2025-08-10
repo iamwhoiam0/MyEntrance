@@ -5,7 +5,7 @@
     <color name="colorPrimaryVariant">#005ECC</color>
     <color name="colorSecondary">#28C76F</color>
     <color name="colorSecondaryVariant">#00B8D9</color>
-    <color name="colorAccent">#FFC107</color>
+    <color name="colorAccent">#06095b</color> <!-- #760913 #391480 #31138f #0d1073-->
 
     <!-- Фоны -->
     <color name="colorBackground">#F7F9FC</color>

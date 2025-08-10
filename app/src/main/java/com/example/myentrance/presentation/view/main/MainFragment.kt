@@ -14,11 +14,14 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.myentrance.R
 import com.example.myentrance.databinding.FragmentMainBinding
 import com.example.myentrance.presentation.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
+
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -29,8 +32,7 @@ class MainFragment : Fragment() {
     )
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
@@ -38,8 +40,8 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val navHostFragment = childFragmentManager
-            .findFragmentById(R.id.bottom_nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            childFragmentManager.findFragmentById(R.id.bottom_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
@@ -84,7 +86,6 @@ class MainFragment : Fragment() {
                             .setPopUpTo(R.id.bottom_nav_graph, inclusive = true, saveState = true)
                             .build()
                     )
-
                     binding.bottomNavigation.selectedItemId = destinationId
                 }
             }

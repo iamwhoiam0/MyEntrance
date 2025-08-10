@@ -32,28 +32,16 @@ import com.example.myentrance.presentation.viewmodel.ProfileViewModel
 import com.example.myentrance.presentation.viewmodel.ProfileViewModelFactory
 import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val authRepository: AuthRepository by lazy {
-        ProvideAuthRepository(requireContext())
-    }
-
-    private val profileRepository: ProfileRepository by lazy {
-        ProfileRepositoryImpl(
-            firestore = FirebaseFirestore.getInstance(),
-            supabaseClient = (requireActivity().application as MyEntranceApp).supabaseClient,
-            context = requireContext()
-        )
-    }
-
-    private val profileViewModel: ProfileViewModel by viewModels {
-        ProfileViewModelFactory(profileRepository, authRepository)
-    }
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)

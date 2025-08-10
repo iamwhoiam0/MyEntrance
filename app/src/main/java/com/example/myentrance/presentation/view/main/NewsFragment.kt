@@ -19,38 +19,22 @@ import com.example.myentrance.presentation.viewmodel.NewsViewModelFactory
 import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
 import com.example.myentrance.presentation.viewmodel.ProvideNewsRepository
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class NewsFragment : Fragment() {
+
     private var _binding: FragmentNewsBinding? = null
     private val binding get() = _binding!!
 
-    val firestore = FirebaseFirestore.getInstance()
-    private val supabaseClient by lazy {
-        (requireActivity().application as MyEntranceApp).supabaseClient
-    }
-    private val newsViewModel: NewsViewModel by viewModels {
-        NewsViewModelFactory(
-            ProvideNewsRepository(
-                context = requireContext(),
-                supabaseClient = supabaseClient,
-                firestore = firestore
-            ),
-            ProvideAuthRepository(requireContext())
-        )
-    }
+    private val newsViewModel: NewsViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentNewsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+        FragmentNewsBinding.inflate(inflater, container, false).also { _binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         val adapter = NewsAdapter()
         binding.recyclerViewNews.adapter = adapter
 
@@ -58,8 +42,8 @@ class NewsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                newsViewModel.newsFeed.collectLatest { newsList ->
-                     adapter.submitList(newsList)
+                newsViewModel.newsFeed.collectLatest {
+                    adapter.submitList(it)
                 }
             }
         }
@@ -67,7 +51,6 @@ class NewsFragment : Fragment() {
         binding.buttonAdd.setOnClickListener {
             findNavController().navigate(R.id.action_newsFragment_to_createNewsFragment)
         }
-
     }
 
     override fun onDestroyView() {
@@ -75,3 +58,4 @@ class NewsFragment : Fragment() {
         _binding = null
     }
 }
+

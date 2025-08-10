@@ -8,13 +8,16 @@ import com.example.myentrance.domain.entities.Result
 import com.example.myentrance.domain.entities.User
 import com.example.myentrance.domain.repository.AuthRepository
 import com.example.myentrance.domain.repository.ProfileRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProfileViewModel(
+@HiltViewModel
+class ProfileViewModel @Inject constructor(
     private val profileRepository: ProfileRepository,
     private val authRepository: AuthRepository
 ) : ViewModel() {

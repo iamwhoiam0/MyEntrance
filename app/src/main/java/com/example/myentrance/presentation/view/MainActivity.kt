@@ -11,11 +11,15 @@ import com.example.myentrance.MyEntranceApp
 import com.example.myentrance.R
 import com.example.myentrance.presentation.UserSessionManager
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var userSessionManager: UserSessionManager
+    @Inject
+    lateinit var userSessionManager: UserSessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

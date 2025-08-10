@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -17,17 +18,18 @@ import com.example.myentrance.domain.entities.AuthResult
 import com.example.myentrance.presentation.viewmodel.AuthViewModel
 import com.example.myentrance.presentation.viewmodel.AuthViewModelFactory
 import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlin.getValue
 
+@AndroidEntryPoint
 class RegisterStep2Fragment : Fragment() {
 
     private var _binding: FragmentRegisterStep2Binding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AuthViewModel by navGraphViewModels(R.id.auth_graph) {
-        AuthViewModelFactory(requireContext())
-    }
+    private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
