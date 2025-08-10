@@ -15,11 +15,20 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="back"
+            android:src="@drawable/ic_arrow_back"
+            android:layout_gravity="start"
+            android:padding="10dp"
+            android:background="@android:color/transparent"/>
         <ImageView
             android:id="@+id/logoImage"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/logo"
+            android:src="@drawable/ic_logo"
             android:contentDescription="@string/app_logo" />
 
         <TextView
@@ -36,8 +45,8 @@
             android:id="@+id/phoneInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Телефон"
             android:layout_marginTop="28dp"
+            android:hint="Введите номер телефона"
             app:startIconTint="@null"
             app:startIconDrawable="@drawable/ic_default_flag"
             app:boxBackgroundMode="outline"
@@ -46,15 +55,17 @@
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusBottomEnd="12dp"
-            app:hintTextColor="@color/colorHint">
+            app:hintTextColor="@color/colorHint"
+            app:prefixText="+7 "
+            app:prefixTextColor="@color/colorOnSurface">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phoneInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=""
                 android:paddingStart="40dp"
                 android:inputType="phone"
+                android:maxLength="15"
                 android:textColor="@color/colorOnSurface"
                 android:textColorHint="@color/colorHint"/>
         </com.google.android.material.textfield.TextInputLayout>

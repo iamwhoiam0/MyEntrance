@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.myentrance.MyEntranceApp
+import com.example.myentrance.R
 import com.example.myentrance.databinding.FragmentChatBinding
 import com.example.myentrance.presentation.ChatAdapter
 import com.example.myentrance.presentation.viewmodel.ChatViewModel
@@ -52,6 +54,10 @@ class ChatFragment : Fragment() {
 
         val currentUser = authRepository.getCurrentUser()
         val buildingId = currentUser?.buildingId ?: "default_building"
+
+        // Установка наименования чата
+        binding.chatToolbar.setTitle("Чат жителей дома №${currentUser?.buildingId}")
+        binding.chatToolbar.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnPrimary))
 
         chatRepository = ProvideChatRepository(requireContext(), supabaseClient, buildingId)
 

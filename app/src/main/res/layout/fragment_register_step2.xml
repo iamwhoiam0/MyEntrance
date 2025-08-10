@@ -11,11 +11,21 @@
     android:background="@color/colorBackground"
     tools:context=".presentation.view.auth.RegisterStep2Fragment">
 
+
+    <ImageButton
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="back"
+        android:src="@drawable/ic_arrow_back"
+        android:layout_gravity="start"
+        android:padding="10dp"
+        android:background="@android:color/transparent"/>
     <ImageView
         android:id="@+id/logoImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/logo"
+        android:src="@drawable/ic_logo"
         android:contentDescription="@string/app_logo"/>
 
     <TextView

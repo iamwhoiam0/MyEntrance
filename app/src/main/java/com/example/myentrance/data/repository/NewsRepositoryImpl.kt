@@ -4,16 +4,21 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.example.myentrance.domain.entities.News
+import com.example.myentrance.domain.entities.NewsWithUser
 import com.example.myentrance.domain.repository.NewsRepository
 import io.github.jan.supabase.SupabaseClient
 import com.example.myentrance.domain.entities.Result
+import com.example.myentrance.domain.entities.User
+import com.google.firebase.firestore.FirebaseFirestore
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Order
 import io.github.jan.supabase.storage.storage
+import kotlinx.coroutines.tasks.await
 
 class NewsRepositoryImpl(
     private val supabaseClient: SupabaseClient,
-    private val context: Context
+    private val context: Context,
+    private val firestore: FirebaseFirestore
 ) : NewsRepository {
 
     override suspend fun getNewsFeed(): List<News> {
@@ -54,4 +59,45 @@ class NewsRepositoryImpl(
             Result.Failure(e)
         }
     }
+
+    override suspend fun getNewsFeedWithUser(): List<NewsWithUser> {
+        return try {
+            val newsList = supabaseClient
+                .from("news")
+                .select {
+                    order(column = "createdAt", order = Order.DESCENDING)
+                }
+                .decodeList<News>()
+
+            val userMap = mutableMapOf<String, User>() // кеш пользователей
+
+            newsList.map { news ->
+                val user = userMap[news.userId] ?: run {
+                    val loadedUser = loadUserById(news.userId) // функция для получения User из Firestore
+                    if (loadedUser != null) {
+                        userMap[news.userId] = loadedUser
+                    }
+                    loadedUser
+                }
+
+                NewsWithUser(
+                    news = news,
+                    userName = user?.name ?: "Неизвестный автор",
+                    userAvatarUrl = user?.avatarUrl
+                )
+            }
+        } catch (e: Exception) {
+            Log.e("NewsRepositoryImpl", "Ошибка получения новостей с пользователями: ${e.message}")
+            emptyList()
+        }
+    }
+
+    private suspend fun loadUserById(userId: String): User?{
+        val docSnapshot = firestore.collection("users").document(userId).get().await()
+        return if (docSnapshot.exists()) {
+            docSnapshot.toObject(User::class.java)
+        } else
+            null
+    }
+
 }

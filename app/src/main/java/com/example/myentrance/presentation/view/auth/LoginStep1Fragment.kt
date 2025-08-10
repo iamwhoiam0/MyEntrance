@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.myentrance.R
@@ -13,6 +14,7 @@ import com.example.myentrance.databinding.FragmentLoginStep1Binding
 import com.example.myentrance.presentation.viewmodel.AuthViewModel
 import com.example.myentrance.presentation.viewmodel.AuthViewModelFactory
 import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
+import com.example.myentrance.utils.PhoneNumberFormattingTextWatcher
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -38,12 +40,18 @@ class LoginStep1Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.phoneInput.addTextChangedListener(PhoneNumberFormattingTextWatcher())
         binding.sendOtpButton.setOnClickListener {
-            val phone = binding.phoneInput.text.toString().trim()
+            val rawDigits = binding.phoneInput.text
+                ?.toString()
+                ?.replace(Regex("\\D"), "")  // оставляем только цифры
+                ?: ""
+
+            val phone = "+7$rawDigits"
             //val phone = "+79999999999"
-            if (phone.isBlank()) {
+            if (phone == "+7") {
                 Toast.makeText(context, "Введите номер телефона", Toast.LENGTH_SHORT).show()
+                //binding.phoneInputLayout.boxStrokeColor = ContextCompat.getColor(requireContext(), R.color.colorError)
                 return@setOnClickListener
             }
             viewModel.checkUserExists(
@@ -52,9 +60,11 @@ class LoginStep1Fragment : Fragment() {
                                   },
                 onNotExists = {
                     Toast.makeText(context, "Номер не зарегистрирован. Просьба пройти регистрацию", Toast.LENGTH_SHORT).show()
+                    //binding.phoneInputLayout.boxStrokeColor = ContextCompat.getColor(requireContext(), R.color.colorError)
                               },
                 onError = { errorMessage ->
                     Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                    //binding.phoneInputLayout.boxStrokeColor = ContextCompat.getColor(requireContext(), R.color.colorError)
                 }
             )
         }

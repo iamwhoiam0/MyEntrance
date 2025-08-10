@@ -19,4 +19,8 @@
     <color name="colorOnSurface">#000000</color>
     <color name="colorHint">#808080</color>
     <color name="colorOutline">#B0B0B0</color>
+
+    <color name="colorError">#B00020</color>
+    <color name="colorSuccess">#4CAF50</color>
+
 </resources>

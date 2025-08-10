@@ -27,6 +27,7 @@
         android:background="@color/colorPrimary"
         app:itemTextColor="@color/bottom_nav_selector"
         app:itemIconTint="@color/bottom_nav_selector"
+        app:itemRippleColor="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -13,6 +13,7 @@ import com.example.myentrance.databinding.FragmentRegisterStep1Binding
 import com.example.myentrance.presentation.viewmodel.AuthViewModel
 import com.example.myentrance.presentation.viewmodel.AuthViewModelFactory
 import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
+import com.example.myentrance.utils.PhoneNumberFormattingTextWatcher
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -42,7 +43,20 @@ class RegisterStep1Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.phoneInput.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+
+        binding.backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.continueButton.setOnClickListener {
+//            val rawDigits = binding.phoneInput.text
+//                ?.toString()
+//                ?.replace(Regex("\\D"), "")  // оставляем только цифры
+//                ?: ""
+//
+//            val phone = "+7$rawDigits"
+
             val phone = "+79850356722"//binding.phoneInput.text.toString().trim()
             val name = "abdul"//binding.nameInput.text.toString().trim()
             val apartment = "32"//binding.apartmentInput.text.toString().trim()

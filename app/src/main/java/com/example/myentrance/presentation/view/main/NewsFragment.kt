@@ -18,6 +18,7 @@ import com.example.myentrance.presentation.viewmodel.NewsViewModel
 import com.example.myentrance.presentation.viewmodel.NewsViewModelFactory
 import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
 import com.example.myentrance.presentation.viewmodel.ProvideNewsRepository
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -25,6 +26,7 @@ class NewsFragment : Fragment() {
     private var _binding: FragmentNewsBinding? = null
     private val binding get() = _binding!!
 
+    val firestore = FirebaseFirestore.getInstance()
     private val supabaseClient by lazy {
         (requireActivity().application as MyEntranceApp).supabaseClient
     }
@@ -32,7 +34,8 @@ class NewsFragment : Fragment() {
         NewsViewModelFactory(
             ProvideNewsRepository(
                 context = requireContext(),
-                supabaseClient = supabaseClient
+                supabaseClient = supabaseClient,
+                firestore = firestore
             ),
             ProvideAuthRepository(requireContext())
         )

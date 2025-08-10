@@ -39,6 +39,10 @@ class RegisterStep2Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.confirmRegisterOtpButton.setOnClickListener {
             val otp = binding.otpInput.text.toString()
             if (otp.isEmpty()) {

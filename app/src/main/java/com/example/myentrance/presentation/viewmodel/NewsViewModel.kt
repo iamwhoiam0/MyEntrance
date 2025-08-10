@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.myentrance.data.repository.NewsRepositoryImpl
 import com.example.myentrance.domain.entities.News
+import com.example.myentrance.domain.entities.NewsWithUser
 import com.example.myentrance.domain.repository.AuthRepository
 import com.example.myentrance.domain.repository.NewsRepository
 import io.github.jan.supabase.SupabaseClient
@@ -18,20 +19,22 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import com.example.myentrance.domain.entities.Result
+import com.google.firebase.firestore.FirebaseFirestore
+
 class NewsViewModel(
     private val newsRepository: NewsRepository,
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val _newsFeed = MutableStateFlow<List<News>>(emptyList())
-    val newsFeed: StateFlow<List<News>> = _newsFeed.asStateFlow()
+    private val _newsFeed = MutableStateFlow<List<NewsWithUser>>(emptyList())
+    val newsFeed: StateFlow<List<NewsWithUser>> = _newsFeed.asStateFlow()
 
     private val _addNewsResult = MutableSharedFlow<Result<Unit>>()
     val addNewsResult = _addNewsResult.asSharedFlow()
 
     fun loadNews() {
         viewModelScope.launch {
-            val newsList = newsRepository.getNewsFeed()
+            val newsList = newsRepository.getNewsFeedWithUser()
             _newsFeed.value = newsList
         }
     }
@@ -58,9 +61,10 @@ class NewsViewModel(
 
 fun ProvideNewsRepository(
     context: Context,
-    supabaseClient: SupabaseClient
+    supabaseClient: SupabaseClient,
+    firestore: FirebaseFirestore
 ): NewsRepository {
-    return NewsRepositoryImpl(supabaseClient, context)
+    return NewsRepositoryImpl(supabaseClient, context, firestore)
 }
 
 class NewsViewModelFactory(

@@ -26,12 +26,15 @@ import com.example.myentrance.domain.entities.Result
 import com.example.myentrance.presentation.viewmodel.NewsViewModelFactory
 import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
 import com.example.myentrance.presentation.viewmodel.ProvideNewsRepository
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 class CreateNewsFragment : Fragment() {
 
     private var _binding: FragmentCreateNewsBinding? = null
     private val binding get() = _binding!!
+
+    val firestore = FirebaseFirestore.getInstance()
 
     private var imageUri: Uri? = null
 
@@ -42,7 +45,8 @@ class CreateNewsFragment : Fragment() {
         NewsViewModelFactory(
             ProvideNewsRepository(
                 context = requireContext(),
-                supabaseClient = supabaseClient
+                supabaseClient = supabaseClient,
+                firestore = firestore
             ),
             ProvideAuthRepository(requireContext())
         )

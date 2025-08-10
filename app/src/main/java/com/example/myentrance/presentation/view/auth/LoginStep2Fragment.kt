@@ -41,6 +41,10 @@ class LoginStep2Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.confirmOtpButton.setOnClickListener {
             //viewModel.loginWithOtp(binding.otpInput.text.toString())
             viewModel.loginWithOtp("111222")
