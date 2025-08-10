@@ -10,15 +10,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.myentrance.MyEntranceApp
 import com.example.myentrance.R
 import com.example.myentrance.databinding.FragmentNewsBinding
 import com.example.myentrance.presentation.NewsAdapter
 import com.example.myentrance.presentation.viewmodel.NewsViewModel
-import com.example.myentrance.presentation.viewmodel.NewsViewModelFactory
-import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
-import com.example.myentrance.presentation.viewmodel.ProvideNewsRepository
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

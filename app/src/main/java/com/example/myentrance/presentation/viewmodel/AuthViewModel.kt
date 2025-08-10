@@ -1,23 +1,15 @@
 package com.example.myentrance.presentation.viewmodel
 
-import android.content.Context
-import android.net.Uri
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.myentrance.MyEntranceApp
-import com.example.myentrance.data.repository.AuthRepositoryImpl
 import com.example.myentrance.domain.entities.AuthResult
 import com.example.myentrance.domain.entities.User
 import com.example.myentrance.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -168,24 +160,3 @@ data class RegistrationData(
     val apartment: String,
     val building: String
 )
-
-fun ProvideAuthRepository(context: Context): AuthRepository {
-    val app = context.applicationContext as MyEntranceApp
-    return AuthRepositoryImpl(
-        firebaseAuth = FirebaseAuth.getInstance(),
-        firestore = FirebaseFirestore.getInstance(),
-        userSessionManager = app.userSessionManager
-    )
-}
-
-class AuthViewModelFactory(
-    private val context: Context
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return AuthViewModel(ProvideAuthRepository(context)) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}

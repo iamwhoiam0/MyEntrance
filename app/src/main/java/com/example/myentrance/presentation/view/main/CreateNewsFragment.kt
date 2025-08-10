@@ -6,51 +6,33 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.myentrance.MyEntranceApp
-import com.example.myentrance.R
 import com.example.myentrance.databinding.FragmentCreateNewsBinding
-import com.example.myentrance.presentation.viewmodel.NewsViewModel
-import kotlinx.coroutines.flow.collectLatest
 import com.example.myentrance.domain.entities.Result
-import com.example.myentrance.presentation.viewmodel.NewsViewModelFactory
-import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
-import com.example.myentrance.presentation.viewmodel.ProvideNewsRepository
+import com.example.myentrance.presentation.viewmodel.NewsViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
+@AndroidEntryPoint
 class CreateNewsFragment : Fragment() {
 
     private var _binding: FragmentCreateNewsBinding? = null
     private val binding get() = _binding!!
 
-    val firestore = FirebaseFirestore.getInstance()
-
     private var imageUri: Uri? = null
 
-    private val supabaseClient by lazy {
-        (requireActivity().application as MyEntranceApp).supabaseClient
-    }
-    private val newsViewModel: NewsViewModel by viewModels {
-        NewsViewModelFactory(
-            ProvideNewsRepository(
-                context = requireContext(),
-                supabaseClient = supabaseClient,
-                firestore = firestore
-            ),
-            ProvideAuthRepository(requireContext())
-        )
-    }
+    private val newsViewModel: NewsViewModel by viewModels()
 
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {

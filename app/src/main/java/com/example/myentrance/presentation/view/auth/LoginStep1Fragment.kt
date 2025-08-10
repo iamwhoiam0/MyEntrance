@@ -1,20 +1,18 @@
 package com.example.myentrance.presentation.view.auth
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.myentrance.R
 import com.example.myentrance.databinding.FragmentLoginStep1Binding
 import com.example.myentrance.presentation.viewmodel.AuthViewModel
-import com.example.myentrance.presentation.viewmodel.AuthViewModelFactory
-import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
 import com.example.myentrance.utils.PhoneNumberFormattingTextWatcher
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -23,13 +21,14 @@ import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
+
 @AndroidEntryPoint
 class LoginStep1Fragment : Fragment() {
 
     private var _binding: FragmentLoginStep1Binding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AuthViewModel by navGraphViewModels(R.id.auth_graph)
+    private val viewModel: AuthViewModel by hiltNavGraphViewModels(R.id.auth_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -48,7 +47,6 @@ class LoginStep1Fragment : Fragment() {
                 ?: ""
 
             val phone = "+7$rawDigits"
-            //val phone = "+79999999999"
             if (phone == "+7") {
                 Toast.makeText(context, "Введите номер телефона", Toast.LENGTH_SHORT).show()
                 //binding.phoneInputLayout.boxStrokeColor = ContextCompat.getColor(requireContext(), R.color.colorError)

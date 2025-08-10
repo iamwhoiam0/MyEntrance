@@ -1,19 +1,19 @@
 package com.example.myentrance.presentation.view.auth
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.myentrance.R
 import com.example.myentrance.databinding.FragmentRegisterStep1Binding
 import com.example.myentrance.presentation.viewmodel.AuthViewModel
-import com.example.myentrance.presentation.viewmodel.AuthViewModelFactory
-import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
 import com.example.myentrance.utils.PhoneNumberFormattingTextWatcher
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -30,7 +30,7 @@ class RegisterStep1Fragment : Fragment() {
     private var _binding: FragmentRegisterStep1Binding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AuthViewModel by viewModels()
+    private val viewModel: AuthViewModel by hiltNavGraphViewModels(R.id.auth_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,17 +50,16 @@ class RegisterStep1Fragment : Fragment() {
         }
 
         binding.continueButton.setOnClickListener {
-//            val rawDigits = binding.phoneInput.text
-//                ?.toString()
-//                ?.replace(Regex("\\D"), "")  // оставляем только цифры
-//                ?: ""
-//
-//            val phone = "+7$rawDigits"
+            val rawDigits = binding.phoneInput.text
+                ?.toString()
+                ?.replace(Regex("\\D"), "")  // оставляем только цифры
+                ?: ""
 
-            val phone = "+79850356722"//binding.phoneInput.text.toString().trim()
-            val name = "abdul"//binding.nameInput.text.toString().trim()
-            val apartment = "32"//binding.apartmentInput.text.toString().trim()
-            val building = "15"//binding.buildingInput.text.toString().trim()
+            val phone = "+7$rawDigits"
+
+            val name = binding.nameInput.text.toString().trim()
+            val apartment = binding.apartmentInput.text.toString().trim()
+            val building = binding.buildingInput.text.toString().trim()
 
             if (phone.isBlank() || name.isBlank() || apartment.isBlank() || building.isBlank()) {
                 Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
@@ -95,6 +94,7 @@ class RegisterStep1Fragment : Fragment() {
                 }
                 override fun onVerificationCompleted(p0: PhoneAuthCredential) { }
                 override fun onVerificationFailed(e: FirebaseException) {
+                    Log.d("RegisterStep1", e.message.toString())
                     Toast.makeText(context, "Ошибка отправки OTP: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }).build()

@@ -5,6 +5,7 @@ converterGson = "2.11.0"
 datastorePreferences = "1.1.7"
 firebaseBom = "34.0.0"
 glide = "4.16.0"
+hiltNavigationFragment = "1.2.0"
 kotlin = "2.2.0"
 coreKtx = "1.16.0"
 junit = "4.13.2"
@@ -46,6 +47,7 @@ play-services-fido = { group = "com.google.android.gms", name = "play-services-f
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+androidx-hilt-navigation-fragment = { module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hiltNavigationFragment" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

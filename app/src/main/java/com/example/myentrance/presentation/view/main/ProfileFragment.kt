@@ -12,26 +12,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.myentrance.MyEntranceApp
 import com.example.myentrance.R
-import com.example.myentrance.data.repository.ProfileRepositoryImpl
 import com.example.myentrance.databinding.FragmentProfileBinding
 import com.example.myentrance.domain.entities.Result
-import com.example.myentrance.domain.repository.AuthRepository
-import com.example.myentrance.domain.repository.ProfileRepository
 import com.example.myentrance.presentation.view.MainActivity
 import com.example.myentrance.presentation.viewmodel.ProfileViewModel
-import com.example.myentrance.presentation.viewmodel.ProfileViewModelFactory
-import com.example.myentrance.presentation.viewmodel.ProvideAuthRepository
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

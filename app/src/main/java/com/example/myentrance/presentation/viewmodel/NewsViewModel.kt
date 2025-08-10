@@ -1,17 +1,12 @@
 package com.example.myentrance.presentation.viewmodel
 
-import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.myentrance.data.repository.NewsRepositoryImpl
 import com.example.myentrance.domain.entities.News
 import com.example.myentrance.domain.entities.NewsWithUser
 import com.example.myentrance.domain.repository.AuthRepository
 import com.example.myentrance.domain.repository.NewsRepository
-import io.github.jan.supabase.SupabaseClient
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +14,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import com.example.myentrance.domain.entities.Result
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -59,26 +53,5 @@ class NewsViewModel @Inject constructor(
                 loadNews()
             }
         }
-    }
-}
-
-fun ProvideNewsRepository(
-    context: Context,
-    supabaseClient: SupabaseClient,
-    firestore: FirebaseFirestore
-): NewsRepository {
-    return NewsRepositoryImpl(supabaseClient, context, firestore)
-}
-
-class NewsViewModelFactory(
-    private val newsRepository: NewsRepository,
-    private val authRepository: AuthRepository
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(NewsViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return NewsViewModel(newsRepository, authRepository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
