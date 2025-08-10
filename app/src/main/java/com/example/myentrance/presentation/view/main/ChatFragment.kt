@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.myentrance.R
 import com.example.myentrance.databinding.FragmentChatBinding
 import com.example.myentrance.domain.repository.AuthRepository
 import com.example.myentrance.presentation.ChatAdapter
@@ -31,7 +33,6 @@ class ChatFragment : Fragment() {
     @Inject
     lateinit var authRepository: AuthRepository
 
-
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
 
@@ -43,6 +44,9 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val currentUser = authRepository.getCurrentUser()
         val buildingId = currentUser?.buildingId ?: "default_building"
+
+        binding.chatToolbar.setTitle("Чат жителей дома №$buildingId")
+        binding.chatToolbar.setTitleTextColor(ContextCompat.getColor(binding.root.context, R.color.colorOnPrimary))
 
         chatViewModel = ViewModelProvider(
             this,
@@ -59,9 +63,9 @@ class ChatFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                chatViewModel.messages.collect { messages ->
-                    adapter.submitList(messages)
-                    if (messages.isNotEmpty()) binding.recyclerViewMessages.scrollToPosition(messages.size - 1)
+                chatViewModel.chatItems.collect { items ->
+                    adapter.submitList(items)
+                    if (items.isNotEmpty()) binding.recyclerViewMessages.scrollToPosition(items.size - 1)
                 }
             }
         }

@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myentrance.data.repository.ChatRepositoryImpl
+import com.example.myentrance.domain.entities.ChatItem
 import com.example.myentrance.domain.entities.ChatMessage
 import com.example.myentrance.domain.entities.ChatMessageWithProfile
 import com.example.myentrance.domain.entities.Result
@@ -30,7 +31,7 @@ class ChatViewModel @AssistedInject constructor(
     private val firestore: FirebaseFirestore,
     private val supabaseClient: SupabaseClient,
     @Assisted private val buildingId: String,
-    private val application: Application // обычная зависимость, НЕ @Assisted
+    private val application: Application
 ) : ViewModel() {
 
     private val chatRepository: ChatRepository by lazy {
@@ -40,8 +41,8 @@ class ChatViewModel @AssistedInject constructor(
     private val _sendMessageResult: MutableSharedFlow<Result<Unit>> = MutableSharedFlow()
     val sendMessageResult = _sendMessageResult.asSharedFlow()
 
-    private val _messages: MutableStateFlow<List<ChatMessageWithProfile>> = MutableStateFlow(emptyList())
-    val messages: StateFlow<List<ChatMessageWithProfile>> = _messages.asStateFlow()
+    private val _chatItems: MutableStateFlow<List<ChatItem>> = MutableStateFlow(emptyList())
+    val chatItems: StateFlow<List<ChatItem>> = _chatItems.asStateFlow()
 
     private val userCache = mutableMapOf<String, User>()
 
@@ -52,7 +53,7 @@ class ChatViewModel @AssistedInject constructor(
     private fun observeMessages() {
         viewModelScope.launch {
             chatRepository.observeMessages().collect { messagesList ->
-                val updated = messagesList.map { msg ->
+                val messagesWithProfile = messagesList.map { msg ->
                     val userData = userCache[msg.senderId] ?: firestore
                         .collection("users")
                         .document(msg.senderId)
@@ -71,9 +72,29 @@ class ChatViewModel @AssistedInject constructor(
                         senderAvatarUrl = userData?.avatarUrl
                     )
                 }
-                _messages.value = updated
+
+                _chatItems.value = groupMessagesByDate(messagesWithProfile)
             }
         }
+    }
+
+    private fun groupMessagesByDate(messages: List<ChatMessageWithProfile>): List<ChatItem> {
+        val sortedMessages = messages.sortedBy { it.timestamp }
+        val groupedItems = mutableListOf<ChatItem>()
+        var currentDate: String? = null
+
+        for (message in sortedMessages) {
+            val messageDate = message.getFormattedDate()
+
+            if (currentDate != messageDate) {
+                groupedItems.add(ChatItem.DateSeparator(messageDate))
+                currentDate = messageDate
+            }
+
+            groupedItems.add(ChatItem.Message(message))
+        }
+
+        return groupedItems
     }
 
     fun sendMessage(text: String, imageUrl: String? = null) {
