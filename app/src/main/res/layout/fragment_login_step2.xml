@@ -37,18 +37,32 @@
         android:layout_marginTop="16dp"
         android:textColor="@color/colorOnBackground"/>
 
-    <EditText
-        android:id="@+id/otpInput"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/otpInputLayout"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:hint="Код"
-        android:inputType="number"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:maxLength="6"
+        android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:textColor="@color/colorOnSurface"
-        android:textColorHint="@color/colorHint"/>
+        android:hint="Код"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/colorPrimary"
+        app:boxStrokeWidth="2dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:hintTextColor="@color/colorHint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/otpInput"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:inputType="number"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:maxLength="6"
+            android:textColor="@color/colorOnSurface"
+            android:textColorHint="@color/colorHint" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/confirmOtpButton"

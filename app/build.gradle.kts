@@ -1,4 +1,5 @@
 import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -15,6 +16,7 @@ if (localPropertiesFile.exists()) {
         localProperties.load(stream)
     }
 }
+
 android {
     namespace = "com.example.myentrance"
     compileSdk = 35
@@ -26,12 +28,11 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.myentrance.HiltTestRunner"
 
         buildConfigField("String", "SUPABASE_URL", "\"${localProperties.getProperty("SUPABASE_URL") ?: ""}\"")
         buildConfigField("String", "SUPABASE_KEY", "\"${localProperties.getProperty("SUPABASE_KEY") ?: ""}\"")
     }
-
 
     buildTypes {
         release {
@@ -58,6 +59,25 @@ android {
         viewBinding = true
         buildConfig = true
     }
+
+    // Конфигурация для тестирования
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+    packaging {
+        resources.excludes.addAll(
+            listOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt"
+            )
+        )
+    }
 }
 
 dependencies {
@@ -69,6 +89,7 @@ dependencies {
 
     implementation(libs.play.services.fido)
 
+    // Базовые тесты
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -108,4 +129,23 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.fragment)
+
+
+    implementation(libs.mockk)
+    // Для Unit test'ов
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.turbine)
+    testImplementation(libs.hilt.android.testing)
+
+    // Для тестирования Navigation
+    androidTestImplementation(libs.androidx.navigation.testing)
+
+    // Основная зависимость для HiltTestApplication
+    androidTestImplementation(libs.hilt.android.testing)
+
+    // Компилятор для обработки аннотаций
+    kspAndroidTest(libs.hilt.compiler)
+
 }

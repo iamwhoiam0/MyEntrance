@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Основные цвета -->
-    <color name="colorPrimary">#3A8DFF</color> <!-- Оставляем фирменный -->
-    <color name="colorPrimaryVariant">#005ECC</color>
-    <color name="colorSecondary">#28C76F</color>
-    <color name="colorSecondaryVariant">#00B8D9</color>
-    <color name="colorAccent">#06095b</color> <!-- Легко светящийся на тёмном -->
+    <color name="colorPrimary">#5BA3FF</color>
+    <color name="colorPrimaryVariant">#3A8DFF</color>
+    <color name="colorSecondary">#4FD683</color>
+    <color name="colorSecondaryVariant">#26E5FF</color>
+    <color name="colorAccent">#FFFFFF</color>
 
     <!-- Фоны -->
-    <color name="colorBackground">#121212</color> <!-- Стандарт Material dark -->
-    <color name="colorSurface">#1E1E1E</color> <!-- Карточки/панели чуть светлее фона -->
+    <color name="colorBackground">#121212</color>
+    <color name="colorSurface">#1E1E1E</color>
 
     <!-- Цвета текста -->
-    <color name="colorOnPrimary">#FFFFFF</color>
-    <color name="colorOnSecondary">#FFFFFF</color>
+    <color name="colorOnPrimary">#000000</color>
+    <color name="colorOnSecondary">#000000</color>
     <color name="colorOnAccent">#FFFFFF</color>
-    <color name="colorOnBackground">#FFFFFF</color>
-    <color name="colorOnSurface">#FFFFFF</color>
-    <color name="colorHint">#A0A0A0</color> <!-- Приглушённый серый для hint -->
-    <color name="colorOutline">#3A3A3A</color> <!-- Более тёмный контур -->
+    <color name="colorOnBackground">#E1E1E1</color>
+    <color name="colorOnSurface">#E1E1E1</color>
+    <color name="colorHint">#9E9E9E</color>
+    <color name="colorOutline">#616161</color>
 
-    <color name="colorError">#CF6679</color> <!-- Material dark red -->
-    <color name="colorSuccess">#4CAF50</color> <!-- Можно оставить оригинал -->
+    <color name="colorError">#CF6679</color>
+    <color name="colorSuccess">#81C784</color>
+
+    <color name="colorSurfaceVariant">#2C2C2C</color>
+    <color name="colorOnSurfaceVariant">#C7C7C7</color>
 </resources>
+
 

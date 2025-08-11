@@ -37,10 +37,8 @@ class NewsAdapter : ListAdapter<NewsWithUser, NewsAdapter.NewsViewHolder>(NewsWi
         fun bind(newsWithUser: NewsWithUser) {
             val news = newsWithUser.news
 
-            // Текст новости
             titleText.text = news.text
 
-            // Изображение новости
             if (!news.imageUrl.isNullOrEmpty()) {
                 imageView.visibility = View.VISIBLE
                 imageView.load(news.imageUrl) {
@@ -51,11 +49,8 @@ class NewsAdapter : ListAdapter<NewsWithUser, NewsAdapter.NewsViewHolder>(NewsWi
             } else {
                 imageView.visibility = View.GONE
             }
-
-            // Имя автора
             authorName.text = newsWithUser.userName.ifBlank { "Неизвестный автор" }
 
-            // Аватар автора
             if (!newsWithUser.userAvatarUrl.isNullOrEmpty()) {
                 authorAvatar.load(newsWithUser.userAvatarUrl) {
                     crossfade(true)

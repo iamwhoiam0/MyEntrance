@@ -59,6 +59,10 @@ class CreateNewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        binding.backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.buttonSelectPhoto.setOnClickListener {
             val options = arrayOf("Выбрать из галереи", "Сделать фото")
             AlertDialog.Builder(requireContext())

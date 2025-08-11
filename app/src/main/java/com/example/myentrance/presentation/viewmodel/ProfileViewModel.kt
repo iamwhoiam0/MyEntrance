@@ -2,7 +2,6 @@ package com.example.myentrance.presentation.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.myentrance.domain.entities.Result
 import com.example.myentrance.domain.entities.User
@@ -83,17 +82,4 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-}
-
-class ProfileViewModelFactory(
-    private val profileRepository: ProfileRepository,
-    private val authRepository: AuthRepository
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
-        @Suppress("UNCHECKED_CAST")
-        return ProfileViewModel(profileRepository, authRepository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }

@@ -94,14 +94,12 @@ class ChatAdapter(private val currentUserId: String) : ListAdapter<ChatItem, Rec
             val cardLayoutParams = binding.messageCard.layoutParams as ConstraintLayout.LayoutParams
 
             if (isMine) {
-                // Мое сообщение - справа
                 cardLayoutParams.startToStart = ConstraintLayout.LayoutParams.UNSET
                 cardLayoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
                 cardLayoutParams.horizontalBias = 1.0f
                 cardLayoutParams.marginStart = 80
                 cardLayoutParams.marginEnd = 8
 
-                // Цвета для моего сообщения
                 binding.messageCard.setCardBackgroundColor(
                     ContextCompat.getColor(binding.root.context, R.color.colorPrimary)
                 )
@@ -112,19 +110,16 @@ class ChatAdapter(private val currentUserId: String) : ListAdapter<ChatItem, Rec
                     ContextCompat.getColor(binding.root.context, R.color.colorOnPrimary)
                 )
 
-                // Скрываем аватар и имя
                 binding.avatarContainer.visibility = android.view.View.GONE
                 binding.textViewSender.visibility = android.view.View.GONE
 
             } else {
-                // Чужое сообщение - слева
                 cardLayoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
                 cardLayoutParams.endToEnd = ConstraintLayout.LayoutParams.UNSET
                 cardLayoutParams.horizontalBias = 0.0f
                 cardLayoutParams.marginStart = 8
                 cardLayoutParams.marginEnd = 80
 
-                // Стандартные цвета
                 binding.messageCard.setCardBackgroundColor(
                     ContextCompat.getColor(binding.root.context, R.color.colorSurface)
                 )
@@ -135,12 +130,10 @@ class ChatAdapter(private val currentUserId: String) : ListAdapter<ChatItem, Rec
                     ContextCompat.getColor(binding.root.context, R.color.colorOutline)
                 )
 
-                // Показываем аватар и имя
                 binding.avatarContainer.visibility = android.view.View.VISIBLE
                 binding.textViewSender.visibility = android.view.View.VISIBLE
                 binding.textViewSender.text = message.senderName
 
-                // Загружаем аватар
                 Glide.with(binding.imageViewSenderAvatar.context)
                     .load(message.senderAvatarUrl)
                     .placeholder(R.drawable.ic_profile)
@@ -165,7 +158,6 @@ class ChatAdapter(private val currentUserId: String) : ListAdapter<ChatItem, Rec
             val cardLayoutParams = binding.messageCard.layoutParams as ConstraintLayout.LayoutParams
 
             if (isMine) {
-                // Мое сообщение - справа
                 cardLayoutParams.startToStart = ConstraintLayout.LayoutParams.UNSET
                 cardLayoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
                 cardLayoutParams.horizontalBias = 1.0f
@@ -179,12 +171,10 @@ class ChatAdapter(private val currentUserId: String) : ListAdapter<ChatItem, Rec
                     ContextCompat.getColor(binding.root.context, R.color.colorOnPrimary)
                 )
 
-                // Скрываем аватар и имя
                 binding.avatarContainer.visibility = android.view.View.GONE
                 binding.textViewSender.visibility = android.view.View.GONE
 
             } else {
-                // Чужое сообщение - слева
                 cardLayoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
                 cardLayoutParams.endToEnd = ConstraintLayout.LayoutParams.UNSET
                 cardLayoutParams.horizontalBias = 0.0f
@@ -198,7 +188,6 @@ class ChatAdapter(private val currentUserId: String) : ListAdapter<ChatItem, Rec
                     ContextCompat.getColor(binding.root.context, R.color.colorOutline)
                 )
 
-                // Показываем аватар и имя
                 binding.avatarContainer.visibility = android.view.View.VISIBLE
                 binding.textViewSender.visibility = android.view.View.VISIBLE
                 binding.textViewSender.text = message.senderName

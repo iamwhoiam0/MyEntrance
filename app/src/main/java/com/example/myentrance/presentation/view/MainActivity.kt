@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 val firebaseUser = FirebaseAuth.getInstance().currentUser
 
                 if (currentUser == null || firebaseUser == null) {
-                    //
+                    // логики нет :(
                 }
 
             } catch (e: Exception) {
